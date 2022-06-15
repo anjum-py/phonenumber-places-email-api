@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1.4
+
+FROM python:3.10.4-slim-buster
+
+ENV TZ="Asia/Kolkata"
+
+RUN set -euo; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    apt-get -y upgrade; \
+    apt-get install gcc curl wget -y; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*;
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_HOME="/opt/poetry" \
+    POETRY_NO_INTERACTION=1 \
+    PYSETUP_PATH="/app" \
+    VENV_PATH="/opt/pysetup/.venv" \
+    PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
+    POETRY_VERSION=1.1.13
+
+RUN pip install "poetry==${POETRY_VERSION}"; \
+    ln -s ${POETRY_HOME}/bin/poetry /usr/bin/poetry;
+
+WORKDIR /src
+COPY pyproject.toml .
+
+RUN poetry config virtualenvs.create false; \
+    poetry config experimental.new-installer false; \
+    poetry install --no-root --no-interaction --no-ansi
+
+EXPOSE 8000
+CMD ["sh"]
