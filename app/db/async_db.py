@@ -34,7 +34,7 @@ class WithinSetTime(Exception):
 
 class RedisDBBase:
     pipeline: Redis = connection.pipeline()
-    base_dir: str = "/src/app/downloads/"
+    base_dir: str = "/src/downloads/"
     update_interval: int = 15 * 24 * 60 * 60  # 15 days in seconds
     max_allowed_commands: int = 10000
 
