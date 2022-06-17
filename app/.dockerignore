@@ -1,0 +1,17 @@
+.vscode/*
+*node_modules*
+*pycache*
+*cache*
+db.sqlite3
+geckodriver.log
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.project
+*.env
+*.env.*
+.python-version
+.pytest_cache
+docker/

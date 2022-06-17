@@ -2,8 +2,6 @@
 
 FROM python:3.10.4-slim-buster
 
-ENV TZ="Asia/Kolkata"
-
 RUN set -euo; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
@@ -25,15 +23,18 @@ ENV PYTHONUNBUFFERED=1 \
     PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
     POETRY_VERSION=1.1.13
 
+
 RUN pip install "poetry==${POETRY_VERSION}"; \
     ln -s ${POETRY_HOME}/bin/poetry /usr/bin/poetry;
 
 WORKDIR /src
-COPY pyproject.toml .
+COPY ../app .
 
 RUN poetry config virtualenvs.create false; \
     poetry config experimental.new-installer false; \
-    poetry install --no-root --no-interaction --no-ansi
+    poetry install --no-root --no-interaction --no-ansi --no-dev;
+
+ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
+# CMD [ "prod" ]
 
 EXPOSE 8000
-CMD ["sh"]
