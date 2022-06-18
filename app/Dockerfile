@@ -40,6 +40,6 @@ ENV GUNICORN_BIND_PORT=10080
 ENV GUNICORN_BIND_IP=0.0.0.0
 ENV GUNICORN_WORKERS=3
 
-ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
-
 EXPOSE 10080
+
+ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
