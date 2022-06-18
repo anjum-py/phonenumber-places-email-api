@@ -13,6 +13,7 @@ connection: redis.Redis = redis.Redis(host=redis_host, port=redis_port, decode_r
 class RedisIndex:
     """
     Base class for managing indexes
+    
     """
     def __init__(self) -> None:
         self.schema = self.schema
