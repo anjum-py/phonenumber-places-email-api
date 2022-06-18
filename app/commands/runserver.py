@@ -1,5 +1,6 @@
 import typer
 import uvicorn
+import os
 from commands.base import ping
 from commands.base import GunicornServer
 
@@ -33,10 +34,15 @@ def prod():
     """
     Start gunicorn with uvicorn workers. Also run basic checks
     """
+    bind_ip = os.getenv("GUNICORN_BIND_IP", "0.0.0.0")
+    bind_port = os.getenv("GUNICORN_BIND_PORT", "10080")
+    gunicorn_workers = os.getenv("GUNICORN_WORKERS", "3")
     options = {
-        "bind": "0.0.0.0:8000",
-        "workers": 3,
+        "bind": f"{bind_ip}:{bind_port}",
+        "workers": gunicorn_workers,
         "worker_class": "uvicorn.workers.UvicornWorker",
     }
-    GunicornServer("main:fastapi_application", options).run()
-
+    if ping():
+        GunicornServer("main:fastapi_application", options).run()
+    else:
+        typer.echo("Redis is not reachable")

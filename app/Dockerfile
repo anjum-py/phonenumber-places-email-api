@@ -34,7 +34,10 @@ RUN poetry config virtualenvs.create false; \
     poetry config experimental.new-installer false; \
     poetry install --no-root --no-interaction --no-ansi --no-dev;
 
-ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
-# CMD [ "prod" ]
+ENV GUNICORN_BIND_PORT=10080
+ENV GUNICORN_BIND_IP=0.0.0.0
+ENV GUNICORN_WORKERS=3
 
-EXPOSE 8000
+ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
+
+EXPOSE 10080
