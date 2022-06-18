@@ -42,7 +42,4 @@ def prod():
         "workers": gunicorn_workers,
         "worker_class": "uvicorn.workers.UvicornWorker",
     }
-    if ping():
-        GunicornServer("main:fastapi_application", options).run()
-    else:
-        typer.echo("Redis is not reachable")
+    GunicornServer("main:fastapi_application", options).run()
