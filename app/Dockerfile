@@ -32,17 +32,17 @@ COPY ../app/pyproject.toml .
 
 RUN poetry install --no-root --no-interaction --no-ansi --no-dev;
 
-RUN poetry config virtualenvs.create false; \
-    poetry config experimental.new-installer false; \
-    poetry install --no-root --no-interaction --no-ansi --no-dev;
+# RUN poetry config virtualenvs.create false; \
+#     poetry config experimental.new-installer false; \
+#     poetry install --no-root --no-interaction --no-ansi --no-dev;
 
-COPY ../app .
+# COPY ../app .
 
-ENV GUNICORN_BIND_PORT=10080
-ENV GUNICORN_BIND_IP=0.0.0.0
-ENV GUNICORN_WORKERS=3
+# ENV GUNICORN_BIND_PORT=10080
+# ENV GUNICORN_BIND_IP=0.0.0.0
+# ENV GUNICORN_WORKERS=3
 
-EXPOSE 10080
+# EXPOSE 10080
 
-ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
+# ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
 
