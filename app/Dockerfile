@@ -30,7 +30,7 @@ RUN pip install "poetry==${POETRY_VERSION}"; \
 WORKDIR /src
 COPY ../pyproject.toml .
 
-COPY ..app .
+COPY ../app .
 
 RUN poetry config virtualenvs.create false; \
     poetry config experimental.new-installer false; \
