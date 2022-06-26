@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  redis-service:
+    image: redis/redis-stack-server:latest
+    container_name: redis-container
+    environment:
+      REDIS_ARGS: "--appendonly yes"
+
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: bridge
+
+  api-app:
+    container_name: api-app-container
+
+    build:
+      context: ../app
+
+    ports:
+      - target: 10080
+        published: 10080
+        protocol: tcp
+        mode: bridge
+
+    restart: unless-stopped
+
+    depends_on:
+      - redis-service
+
+networks:
+  webapp:
+
+volumes:
+  redis_data:
+    driver: local

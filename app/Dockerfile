@@ -6,7 +6,7 @@ RUN set -euo; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install gcc curl wget -y; \
+    apt-get install gcc -y; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*;
 
@@ -28,21 +28,19 @@ RUN pip install "poetry==${POETRY_VERSION}"; \
     ln -s ${POETRY_HOME}/bin/poetry /usr/bin/poetry;
 
 WORKDIR /src
-COPY ../app/pyproject.toml .
+COPY ../pyproject.toml .
 
-RUN poetry install --no-root --no-interaction --no-ansi --no-dev;
+COPY ../ ./
 
-# RUN poetry config virtualenvs.create false; \
-#     poetry config experimental.new-installer false; \
-#     poetry install --no-root --no-interaction --no-ansi --no-dev;
+RUN poetry config virtualenvs.create false; \
+    poetry config experimental.new-installer false; \
+    poetry install --no-root --no-interaction --no-ansi --no-dev;
 
-# COPY ../app .
+ENV GUNICORN_BIND_PORT=10080
+ENV GUNICORN_BIND_IP=0.0.0.0
+ENV GUNICORN_WORKERS=3
 
-# ENV GUNICORN_BIND_PORT=10080
-# ENV GUNICORN_BIND_IP=0.0.0.0
-# ENV GUNICORN_WORKERS=3
+EXPOSE 10080
 
-# EXPOSE 10080
-
-# ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
+ENTRYPOINT ["python", "manage.py", "runserver", "prod"]
 

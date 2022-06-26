@@ -49,5 +49,5 @@ RUN poetry config virtualenvs.create false; \
     poetry config experimental.new-installer false; \
     poetry install --no-root --no-interaction --no-ansi
 
-EXPOSE 8000
+EXPOSE 10338
 CMD ["sh"]
