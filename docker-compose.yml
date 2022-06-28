@@ -120,6 +120,7 @@ services:
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
 
       TRAEFIK_LOG: "true"
+      TRAEFIK_LOG_LEVEL: "DEBUG"
       TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
       TRAEFIK_LOG_FORMAT: "json"
 
