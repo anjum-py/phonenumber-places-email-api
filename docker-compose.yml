@@ -36,6 +36,31 @@ services:
       - "traefik.http.routers.pepapi.tls=true"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
 
+      - "traefik.http.routers.pepapi-http.middlewares=pepapi-https"
+      - 'traefik.http.middlewares.pepapi-https.redirectscheme.permanent=true'
+      - "traefik.http.middlewares.pepapi-https.redirectscheme.scheme=https"
+
+      - "traefik.http.routers.pepapi-acme.entrypoints=unsecure"
+      - "traefik.http.routers.pepapi-acme.priority=1"
+      - "traefik.http.routers.pepapi-acme.rule=Host(`pepapi.sahl.solutions`)"
+
+      # - 'traefik.http.routers.traefik.priority=1'
+      # "/.well-known/acme-challenge/"
+
+
+
+      # - 'traefik.http.middlewares.traefik-redirectscheme.redirectscheme.scheme=https'
+
+      # - 'traefik.http.routers.traefik-secure.entrypoints=websecure'
+      # - 'traefik.http.routers.traefik-secure.rule=Host(`traefik.example.com`)'
+      # - 'traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt'
+      
+      # - 'traefik.http.routers.traefik.entrypoints=web'
+      
+      # - 'traefik.http.routers.traefik.middlewares=traefik-redirectscheme'
+      # - 'traefik.http.routers.traefik.rule=Host(`traefik.example.com`)'
+      # - 'traefik.http.services.traefik-service.loadbalancer.server.port=8080'
+
 
     restart: unless-stopped
 
@@ -70,9 +95,9 @@ services:
       TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
       TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
 
-      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_TO: "secure"
-      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
-      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
+      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_TO: "secure"
+      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
+      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
 
       TRAEFIK_ENTRYPOINTS_SECURE: "true"
       TRAEFIK_ENTRYPOINTS_SECURE_ADDRESS: :443
