@@ -35,6 +35,9 @@ services:
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
 
+      - "traefik.http.routers.dashboard.rule=Host(`pepapi.sahl.solutions`) && PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
     restart: unless-stopped
 
     depends_on:
@@ -63,7 +66,7 @@ services:
 
     volumes:
       - /run/docker.sock:/var/run/docker.sock:ro
-      - "./letsencrypt:/letsencrypt"
+      - "/letsencrypt:/letsencrypt"
 
     environment:
       TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
@@ -72,20 +75,20 @@ services:
       TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_TO: "secure"
       TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
       TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
-
       TRAEFIK_ENTRYPOINTS_SECURE: "true"
       TRAEFIK_ENTRYPOINTS_SECURE_ADDRESS: :443
 
       TRAEFIK_PROVIDERS_DOCKER: "true"
       TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: "false"
 
-      TRAEFIK_API: "true"
+      # TRAEFIK_API: "true"
       TRAEFIK_API_DASHBOARD: "true"
-      TRAEFIK_API_INSECURE: "false"
+      # TRAEFIK_API_INSECURE: "false"
 
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY: "true"
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_EMAIL: "anjum@sahl.solutions"
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_TLSCHALLENGE: "true"
+      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_STORAGE: /letsencrypt/acme.json
 
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
 
