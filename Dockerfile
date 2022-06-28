@@ -28,13 +28,13 @@ RUN pip install "poetry==${POETRY_VERSION}"; \
     ln -s ${POETRY_HOME}/bin/poetry /usr/bin/poetry;
 
 WORKDIR /src
-COPY ../pyproject.toml .
-
-COPY ../app .
+COPY pyproject.toml .
 
 RUN poetry config virtualenvs.create false; \
     poetry config experimental.new-installer false; \
     poetry install --no-root --no-interaction --no-ansi --no-dev;
+
+COPY ./ .
 
 ENV GUNICORN_BIND_PORT=10080
 ENV GUNICORN_BIND_IP=0.0.0.0

@@ -42,4 +42,4 @@ def prod():
         "workers": gunicorn_workers,
         "worker_class": "uvicorn.workers.UvicornWorker",
     }
-    GunicornServer("main:fastapi_application", options).run()
+    GunicornServer("main:app", options).run()

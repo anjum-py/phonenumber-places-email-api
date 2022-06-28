@@ -17,11 +17,11 @@ services:
         protocol: tcp
         mode: bridge
 
-  api-app:
+  api-app-service:
     container_name: api-app-container
 
     build:
-      context: ../app
+      context: .
 
     ports:
       - target: 10080
@@ -29,10 +29,43 @@ services:
         protocol: tcp
         mode: bridge
 
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`demoapi`)"
     restart: unless-stopped
 
     depends_on:
       - redis-service
+
+
+  traefik-service:
+    container_name: traefik-container
+    image: traefik:latest
+
+    ports:
+      - target: 80
+        published: 8000
+        protocol: tcp
+        mode: bridge
+
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: bridge
+
+    volumes:
+      - /run/docker.sock:/var/run/docker.sock:ro
+
+    environment:
+      TRAEFIK_ENTRYPOINTS_UNSECURE: true 
+      TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
+
+      TRAEFIK_PROVIDERS_DOCKER: true
+      TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: false
+
+      TRAEFIK_API: true
+      TRAEFIK_API_DASHBOARD: true
+      TRAEFIK_API_INSECURE: true
 
 networks:
   webapp:

@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import places, phonenumber, email, redis_db
@@ -43,7 +44,7 @@ tags_metadata = [
     },
 ]
 
-fastapi_application = FastAPI(
+app = FastAPI(
     title="Phone number, email, and places API",
     description=description,
     version="0.1.0",
@@ -58,15 +59,12 @@ fastapi_application = FastAPI(
         "url": "https://example.com",
     },
     openapi_tags=tags_metadata,
+    openapi_url="/api"
 )
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-]
+origins = os.getenv("CORS_ORIGINS", "").split()
 
-
-fastapi_application.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
@@ -75,7 +73,7 @@ fastapi_application.add_middleware(
 )
 
 
-fastapi_application.include_router(places.router)
-fastapi_application.include_router(phonenumber.router)
-fastapi_application.include_router(email.router)
-fastapi_application.include_router(redis_db.router)
+app.include_router(places.router)
+app.include_router(phonenumber.router)
+app.include_router(email.router)
+app.include_router(redis_db.router)
