@@ -8,7 +8,7 @@ description = """
 ### Phone numbers
 
 - Lookup international codes for any country
-- Format phone numbers
+- Regional formatting for phone numbers.
 
 ### Emails
 
