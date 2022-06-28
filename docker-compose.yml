@@ -31,8 +31,8 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.entrypoints=unsecure"
+      - "traefik.http.routers.pepapisec.entrypoints=secure"
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
       - "traefik.http.routers.pepapi.tls=true"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
