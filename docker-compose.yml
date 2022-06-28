@@ -81,6 +81,9 @@ services:
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_EMAIL: "anjum@sahl.solutions"
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_HTTPCHALLENGE_ENTRYPOINT: unsecure
 
+      TRAEFIK_LOG: "true"
+      TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
+      TRAEFIK_LOG_FORMAT: "json"
 
 networks:
   webapp:
