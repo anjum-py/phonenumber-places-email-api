@@ -38,6 +38,7 @@ services:
       - "traefik.http.routers.pepapisec.tls=true"
       - "traefik.http.routers.pepapisec.tls.certresolver=primary"
 
+
     restart: unless-stopped
 
     depends_on:
@@ -71,6 +72,9 @@ services:
       TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
       TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
 
+      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
+
       TRAEFIK_ENTRYPOINTS_SECURE: "true"
       TRAEFIK_ENTRYPOINTS_SECURE_ADDRESS: :443
 
@@ -88,6 +92,10 @@ services:
       TRAEFIK_LOG: "true"
       TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
       TRAEFIK_LOG_FORMAT: "json"
+
+    #  - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      # - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # - "--entrypoints.websecure.address=:443"
 
 networks:
   webapp:
