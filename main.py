@@ -59,7 +59,6 @@ app = FastAPI(
         "url": "https://example.com",
     },
     openapi_tags=tags_metadata,
-    openapi_url="/api"
 )
 
 origins = os.getenv("CORS_ORIGINS", "").split()
