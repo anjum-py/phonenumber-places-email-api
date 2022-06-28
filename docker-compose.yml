@@ -31,12 +31,10 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pepapi.entrypoints=unsecure"
+      - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
-      - "traefik.http.routers.pepapisec.entrypoints=secure"
-      - "traefik.http.routers.pepapisec.rule=Host(`pepapi.sahl.solutions`)"
-      - "traefik.http.routers.pepapisec.tls=true"
-      - "traefik.http.routers.pepapisec.tls.certresolver=primary"
+      - "traefik.http.routers.pepapi.tls=true"
+      - "traefik.http.routers.pepapi.tls.certresolver=primary"
 
 
     restart: unless-stopped
