@@ -31,39 +31,9 @@ services:
 
     labels:
       - "traefik.enable=true"
-
-      # - "traefik.http.routers.pepapi-acme.entrypoints=unsecure"
-      # - "traefik.http.routers.pepapi-acme.rule=Host(`pepapi.sahl.solutions`) && PathPrefix(`/.well-known/acme-challenge/`)"
-
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
-
-      # - "traefik.http.routers.pepapi.tls=true"
-
-      # - "traefik.http.routers.pepapi-http.middlewares=pepapi-https"
-      # - 'traefik.http.middlewares.pepapi-https.redirectscheme.permanent=true'
-      # - "traefik.http.middlewares.pepapi-https.redirectscheme.scheme=https"
-
-
-      # PathPrefix(`/products/`, `/articles/{cat:[a-z]+}/{id:[0-9]+}`)
-      # - 'traefik.http.routers.traefik.priority=1'
-      # "/.well-known/acme-challenge/"
-
-
-
-      # - 'traefik.http.middlewares.traefik-redirectscheme.redirectscheme.scheme=https'
-
-      # - 'traefik.http.routers.traefik-secure.entrypoints=websecure'
-      # - 'traefik.http.routers.traefik-secure.rule=Host(`traefik.example.com`)'
-      # - 'traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt'
-      
-      # - 'traefik.http.routers.traefik.entrypoints=web'
-      
-      # - 'traefik.http.routers.traefik.middlewares=traefik-redirectscheme'
-      # - 'traefik.http.routers.traefik.rule=Host(`traefik.example.com`)'
-      # - 'traefik.http.services.traefik-service.loadbalancer.server.port=8080'
-
 
     restart: unless-stopped
 
@@ -96,12 +66,12 @@ services:
       - "./letsencrypt:/letsencrypt"
 
     environment:
-      # TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
-      # TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
+      TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
 
-      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_TO: "secure"
-      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
-      # TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_TO: "secure"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_PERMANENT: "true"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME: "https"
 
       TRAEFIK_ENTRYPOINTS_SECURE: "true"
       TRAEFIK_ENTRYPOINTS_SECURE_ADDRESS: :443
@@ -116,17 +86,13 @@ services:
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY: "true"
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_EMAIL: "anjum@sahl.solutions"
       TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_TLSCHALLENGE: "true"
-      # TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_HTTPCHALLENGE_ENTRYPOINT: secure
-      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
+
+      # TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
 
       TRAEFIK_LOG: "true"
       TRAEFIK_LOG_LEVEL: "DEBUG"
       TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
       TRAEFIK_LOG_FORMAT: "json"
-
-    #  - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      # - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      # - "--entrypoints.websecure.address=:443"
 
 networks:
   webapp:
