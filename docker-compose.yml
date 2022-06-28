@@ -57,7 +57,7 @@ services:
       - /run/docker.sock:/var/run/docker.sock:ro
 
     environment:
-      TRAEFIK_ENTRYPOINTS_UNSECURE: true 
+      TRAEFIK_ENTRYPOINTS_UNSECURE:
       TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
 
       TRAEFIK_PROVIDERS_DOCKER: true

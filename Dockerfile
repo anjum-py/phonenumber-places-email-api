@@ -27,7 +27,7 @@ ENV PYTHONUNBUFFERED=1 \
 RUN pip install "poetry==${POETRY_VERSION}"; \
     ln -s ${POETRY_HOME}/bin/poetry /usr/bin/poetry;
 
-WORKDIR /src
+WORKDIR /src/pepapi
 COPY pyproject.toml .
 
 RUN poetry config virtualenvs.create false; \
