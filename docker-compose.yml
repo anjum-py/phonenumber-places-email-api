@@ -31,7 +31,12 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`demoapi`)"
+      - "traefik.http.routers.pepapi.entrypoints=secure"
+      - "traefik.http.routers.pepapi.entrypoints=unsecure"
+      - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
+      - "traefik.http.routers.pepapi.tls=true"
+      - "traefik.http.routers.pepapi.tls.certresolver=primary"
+
     restart: unless-stopped
 
     depends_on:
@@ -66,6 +71,11 @@ services:
       TRAEFIK_API: "true"
       TRAEFIK_API_DASHBOARD: "true"
       TRAEFIK_API_INSECURE: "true"
+
+      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY: "true"
+      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_EMAIL: "anjum@sahl.solutions"
+      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_HTTPCHALLENGE_ENTRYPOINT: unsecure
+
 
 networks:
   webapp:
