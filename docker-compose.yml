@@ -31,6 +31,10 @@ services:
 
     labels:
       - "traefik.enable=true"
+
+      - "traefik.http.routers.pepapi-acme.entrypoints=unsecure"
+      - "traefik.http.routers.pepapi-acme.rule=Host(`pepapi.sahl.solutions`) && PathPrefix(`/.well-known/acme-challenge/`)"
+
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
       - "traefik.http.routers.pepapi.tls=true"
@@ -40,10 +44,8 @@ services:
       - 'traefik.http.middlewares.pepapi-https.redirectscheme.permanent=true'
       - "traefik.http.middlewares.pepapi-https.redirectscheme.scheme=https"
 
-      - "traefik.http.routers.pepapi-acme.entrypoints=unsecure"
-      - "traefik.http.routers.pepapi-acme.priority=1"
-      - "traefik.http.routers.pepapi-acme.rule=Host(`pepapi.sahl.solutions`)"
 
+      # PathPrefix(`/products/`, `/articles/{cat:[a-z]+}/{id:[0-9]+}`)
       # - 'traefik.http.routers.traefik.priority=1'
       # "/.well-known/acme-challenge/"
 
