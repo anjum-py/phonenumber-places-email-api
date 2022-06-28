@@ -49,7 +49,7 @@ services:
 
     ports:
       - target: 80
-        published: 8000
+        published: 80
         protocol: tcp
         mode: bridge
 
