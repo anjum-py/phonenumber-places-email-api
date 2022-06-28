@@ -92,7 +92,7 @@ services:
 
       # Uncomment to enable staging letsencrypt server
       # Disable once you confirm everythin is working
-      TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      # TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
 
       TRAEFIK_LOG: "true"
       TRAEFIK_LOG_LEVEL: "DEBUG"
