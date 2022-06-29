@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
-      - "traefik.http.routers.pepapi.tls.options=tls13"
+      - "traefik.http.routers.pepapi.tls.options=tls13@file"
 
       - "traefik.http.routers.pepapi.tls.domains[0].main=pepapi.sahl.solutions"
       - "traefik.http.routers.pepapi.tls.domains[0].sans=demo.sahl.solutions"
