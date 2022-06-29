@@ -3,6 +3,4 @@ tls:
     default:
       minVersion: VersionTLS13
       preferServerCipherSuites: true
-    # tls13:
-    #   minVersion: VersionTLS13
 
