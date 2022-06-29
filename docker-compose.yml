@@ -34,6 +34,7 @@ services:
       - "traefik.http.routers.pepapi.rule=Host(`pepapi.sahl.solutions`)"
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
+      - "traefik.http.routers.pepapi.tls.options=latest"
 
       - "traefik.http.routers.pepapi.tls.domains[0].main=pepapi.sahl.solutions"
       - "traefik.http.routers.pepapi.tls.domains[0].sans=demo.sahl.solutions"
@@ -66,6 +67,7 @@ services:
     volumes:
       - /run/docker.sock:/var/run/docker.sock:ro
       - "/letsencrypt:/letsencrypt"
+      - "./traefik.yml:/etc/traefik.yml"
 
     environment:
       TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
@@ -92,10 +94,10 @@ services:
       # Disable once you confirm everythin is working
       # TRAEFIK_CERTIFICATESRESOLVERS_PRIMARY_ACME_CASERVER: "https://acme-staging-v02.api.letsencrypt.org/directory"
 
-      # TRAEFIK_LOG: "true"
-      # TRAEFIK_LOG_LEVEL: "DEBUG"
-      # TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
-      # TRAEFIK_LOG_FORMAT: "json"
+      TRAEFIK_LOG: "true"
+      TRAEFIK_LOG_LEVEL: "DEBUG"
+      TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
+      TRAEFIK_LOG_FORMAT: "json"
 
     depends_on:
       - redis-service
