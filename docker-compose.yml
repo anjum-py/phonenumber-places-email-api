@@ -35,6 +35,10 @@ services:
       - "traefik.http.routers.pepapi.entrypoints=secure"
       - "traefik.http.routers.pepapi.tls.certresolver=primary"
 
+      - "traefik.tls.options.tls13=true"
+      - "traefik.tls.options.tls13.minversion=VersionTLS13"
+      - "traefik.tls.options.tls13.preferserverciphersuites=true"
+
       - "traefik.http.routers.pepapi.tls.domains[0].main=pepapi.sahl.solutions"
       - "traefik.http.routers.pepapi.tls.domains[0].sans=demo.sahl.solutions"
 
