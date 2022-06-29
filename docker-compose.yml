@@ -67,7 +67,7 @@ services:
     volumes:
       - /run/docker.sock:/var/run/docker.sock:ro
       - "/letsencrypt:/letsencrypt"
-      - "./traefik.yml:/etc/traefik.yml"
+      - "./traefik.yml:/etc/traefik/traefik.yml"
 
     environment:
       TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
