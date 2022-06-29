@@ -37,6 +37,7 @@ services:
       # - "traefik.http.routers.pepapi.tls.options=tls13@file"
       - "traefik.tls.options.tls13=true"
       - "traefik.tls.options.tls13.minversion=VersionTLS13"
+      - "traefik.tls.options.tls13.preferserverciphersuites=true"
 
       - "traefik.http.routers.pepapi.tls.domains[0].main=pepapi.sahl.solutions"
       - "traefik.http.routers.pepapi.tls.domains[0].sans=demo.sahl.solutions"
@@ -70,7 +71,7 @@ services:
       - /run/docker.sock:/var/run/docker.sock:ro
       - "/letsencrypt:/letsencrypt"
       - "./traefik/traefik.yml:/etc/traefik/traefik.yml"
-      - "./traefik/tls-options.yml:/etc/traefik/dynamic/tls-options.yml"
+      # - "./traefik/tls-options.yml:/etc/traefik/dynamic/tls-options.yml"
 
     depends_on:
       - redis-service
