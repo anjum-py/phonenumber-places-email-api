@@ -5,7 +5,7 @@ from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import Query
 
-redis_host: str = os.getenv("REDIS_HOST", "localhost")
+redis_host: str = os.getenv("REDIS_HOST", "redis-service")
 redis_port: int = int(os.getenv("REDIS_PORT", "6379"))
 connection: redis.Redis = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
 
@@ -155,4 +155,6 @@ class CityIndex(RedisIndex):
 
     name = "cities"
     prefix = "city:"
+
+
 

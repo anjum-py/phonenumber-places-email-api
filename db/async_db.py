@@ -1,3 +1,5 @@
+
+from pathlib import Path
 import csv, re, os, time, aiohttp, aiofiles, datetime, humanize
 from typing import Optional
 from redis.asyncio.client import Redis
@@ -34,7 +36,7 @@ class WithinSetTime(Exception):
 
 class RedisDBBase:
     pipeline: Redis = connection.pipeline()
-    base_dir: str = "/src/downloads/"
+    base_dir: str = os.path.join(Path(__file__).resolve().parent.parent, "downloads/")
     update_interval: int = 15 * 24 * 60 * 60  # 15 days in seconds
     max_allowed_commands: int = 10000
 

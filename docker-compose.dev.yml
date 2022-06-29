@@ -1,0 +1,91 @@
+version: "3.9"
+services:
+  redis-service:
+    image: redis/redis-stack-server:latest
+    container_name: redis-container
+    environment:
+      REDIS_ARGS: "--appendonly yes"
+
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: bridge
+
+  api-app-service:
+    container_name: api-app-container
+
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - target: 10338
+        published: 10338
+        protocol: tcp
+        mode: bridge
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pepapi.rule=Host(`demoapi`)"
+      - "traefik.http.routers.pepapi.entrypoints=unsecure"
+
+    restart: unless-stopped
+
+    depends_on:
+      - redis-service
+
+    volumes:
+      - type: bind
+        source: ./
+        target: /src/
+
+  traefik-service:
+    container_name: traefik-container
+    image: traefik:latest
+
+    ports:
+      - target: 80
+        published: 8000
+        protocol: tcp
+        mode: bridge
+
+      - target: 443
+        published: 8443
+        protocol: tcp
+        mode: bridge
+
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: bridge
+
+    volumes:
+      - /run/docker.sock:/var/run/docker.sock:ro
+
+    environment:
+      TRAEFIK_ENTRYPOINTS_UNSECURE: "true"
+      TRAEFIK_ENTRYPOINTS_UNSECURE_ADDRESS: :80
+
+      TRAEFIK_PROVIDERS_DOCKER: "true"
+      TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: "true"
+
+      TRAEFIK_API_DASHBOARD: "true"
+
+      TRAEFIK_LOG: "true"
+      TRAEFIK_LOG_LEVEL: "DEBUG"
+      TRAEFIK_LOG_FILEPATH: "/var/log/traefik-logs.log"
+      TRAEFIK_LOG_FORMAT: "json"
+
+    depends_on:
+      - redis-service
+      - api-app-service
+
+volumes:
+  redis_data:
+    driver: local

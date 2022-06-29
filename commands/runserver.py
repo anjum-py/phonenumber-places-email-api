@@ -10,7 +10,7 @@ typer_app = typer.Typer(help="Helper commands to run server in prod or dev")
 @typer_app.command()
 def dev(
     host: str = "0.0.0.0",
-    port: int = 8000,
+    port: int = 10338,
     reload: bool = True,
     log_level: str = "debug",
 ):
@@ -19,7 +19,7 @@ def dev(
     """
     if ping():
         uvicorn.run(
-            "main:fastapi_application",
+            "main:app",
             host=host,
             port=port,
             log_level=log_level,
