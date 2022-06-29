@@ -1,7 +1,8 @@
 tls:
   options:
     default:
-      minVersion: VersionTLS12
-    tls13:
       minVersion: VersionTLS13
+      preferServerCipherSuites: true
+    # tls13:
+    #   minVersion: VersionTLS13
 
